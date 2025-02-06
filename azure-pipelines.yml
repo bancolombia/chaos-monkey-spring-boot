@@ -25,9 +25,6 @@ steps:
   inputs:
     SonarQube: SonarQube
     scannerMode: other
-    cliProjectKey: "$(DefinitionName)"
-    cliProjectName: "$(DefinitionName)"
-    cliProjectVersion: "$(Build.BuildNumber)"
     extraProperties: |
       sonar.projectVersion=$(Build.BuildNumber)
       sonar.projectName=$(Build.Repository.Name)
