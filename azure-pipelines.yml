@@ -1,19 +1,50 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
 
 trigger:
-- main
+  branches:
+    include:
+      - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: Azure Pipelines
+  demands: java
 
 steps:
 - script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  displayName: 'Hello world'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: JavaToolInstaller@1
+  displayName: 'Use Java 17'
+  inputs:
+    versionSpec: 17
+    jdkArchitectureOption: x64
+    jdkSourceOption: PreInstalled
+
+- task: SonarQubePrepare@7
+  displayName: "Prepare analysis on SonarQube"
+  inputs:
+    SonarQube: SonarQube
+    scannerMode: CLI
+    configMode: manual
+    cliProjectKey: "$(DefinitionName)"
+    cliProjectName: "$(DefinitionName)"
+    cliProjectVersion: "$(Build.BuildNumber)"
+    extraProperties: |
+      sonar.projectVersion=$(Build.BuildNumber)
+      sonar.projectName=$(Build.Repository.Name)
+      sonar.projectKey=$(Build.Repository.Name)
+
+      sona.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
+      sonar.junit.reportsPaths=$(spring-root-path)/chaos-monkey-spring-boot/target/site/jacoco/jacoco.xml
+
+      sonar.sourceEncoding=UTF-8
+      sonar.sources=dojo
+      sonar.coverage.exclusions=**/*.js, **/*.html, **/*.xml, **/*.adoc, **/*.png ,**/*.json, **/*.properties, **/*.yaml, **/*.yml, **/*.txt, **/*.css, **/*.scss, **/*.md, **/*.gitignore, **/*.dockerignore, **/*.sh, **/*.log, **/applications/**/*, **/config/**/*, **/exception/**/*, **/acceptance-test/**/*, **/r2dbc/**/*, **/metrics/**,
+
+- task: SonarQubeAnalyze@7
+  displayName: "Run Code Analysis"
+
+- task: sonar-buildbreaker@8
+  displayName: "Break build on quality gate failure"
+  inputs:
+    SonarQube: SonarQube
