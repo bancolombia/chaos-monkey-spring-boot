@@ -1,7 +1,7 @@
 name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
 
 variables:
-  project.name: "Continuos_resilience _chaos_enginnering"
+  project.name: "Continuos_resilience_chaos_enginnering"
   project.application-code: "OPS0112001"
   sonar.project: $(project.name)_$(project.application-code)
 
