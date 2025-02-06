@@ -1,5 +1,11 @@
 name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
 
+_
+variables:
+  project.name: "Continuos_resilience _chaos_enginnering"
+  project.application-code: "OPS0112001"
+  sonar.project: $(project.name)_$(project.application-code)
+
 trigger:
   branches:
     include:
@@ -24,12 +30,12 @@ steps:
   displayName: "Prepare analysis on SonarQube"
   inputs:
     SonarQube: SonarQube
-    scannerMode: Other
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: $(sonar.project)
+    cliProjectName: $(sonar.project)
+    cliProjectVersion: "$(Build.BuildNumber)"
     extraProperties: |
-      sonar.projectVersion=$(Build.BuildNumber)
-      sonar.projectName=$(Build.Repository.Name)
-      sonar.projectKey=$(Build.Repository.Name)
-
       sonar.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
       sonar.coverage.jacoco.xmlReportPaths=$(spring-root-path)/chaos-monkey-spring-boot/target/site/jacoco/jacoco.xml
       sonar.junit.reportsPaths=$(spring-root-path)/chaos-monkey-spring-boot/target\surefire-reports
