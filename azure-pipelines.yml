@@ -20,7 +20,7 @@ steps:
     jdkArchitectureOption: x64
     jdkSourceOption: PreInstalled
 
-- task: SonarQubePrepare@7
+- task: SonarQubePrepare@6
   displayName: "Prepare analysis on SonarQube"
   inputs:
     SonarQube: SonarQube
