@@ -34,12 +34,11 @@ steps:
       sonar.projectName=$(Build.Repository.Name)
       sonar.projectKey=$(Build.Repository.Name)
 
-      sona.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
+      sonar.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
       sonar.coverage.jacoco.xmlReportPaths=$(spring-root-path)/chaos-monkey-spring-boot/target/site/jacoco/jacoco.xml
       sonar.junit.reportsPaths=$(spring-root-path)/chaos-monkey-spring-boot/target\surefire-reports
 
       sonar.sourceEncoding=UTF-8
-      sonar.sources=dojo
       sonar.coverage.exclusions=**/*.js, **/*.html, **/*.xml, **/*.adoc, **/*.png ,**/*.json, **/*.properties, **/*.yaml, **/*.yml, **/*.txt, **/*.css, **/*.scss, **/*.md, **/*.gitignore, **/*.dockerignore, **/*.sh, **/*.log, **/applications/**/*, **/config/**/*, **/exception/**/*, **/acceptance-test/**/*, **/r2dbc/**/*, **/metrics/**,
 
 - task: SonarQubeAnalyze@7
