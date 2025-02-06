@@ -35,7 +35,8 @@ steps:
       sonar.projectKey=$(Build.Repository.Name)
 
       sona.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
-      sonar.junit.reportsPaths=$(spring-root-path)/chaos-monkey-spring-boot/target/site/jacoco/jacoco.xml
+      sonar.coverage.jacoco.xmlReportPaths=$(spring-root-path)/chaos-monkey-spring-boot/target/site/jacoco/jacoco.xml
+      sonar.junit.reportsPaths=$(spring-root-path)/chaos-monkey-spring-boot/target\surefire-reports
 
       sonar.sourceEncoding=UTF-8
       sonar.sources=dojo
@@ -48,3 +49,19 @@ steps:
   displayName: "Break build on quality gate failure"
   inputs:
     SonarQube: SonarQube
+
+- task: CopyFiles@2
+  displayName: 'Copy Jar'
+  inputs:
+    SourceFolder: '$(spring-root-path)/chaos-monkey-spring-boot/target'
+    Contents: 'chaos-monkey-spring-boot-3.1.1-SNAPSHOT-jar-with-dependencies.jar'
+    TargetFolder: '$(spring-root-path)/docker'
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/trunk'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/tdev')))
+
+steps:
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Artifact'
+  inputs:
+    PathtoPublish: '$(spring-root-path)/docker'
+    ArtifactName: Artifact
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/trunk'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/tdev')))
