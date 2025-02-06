@@ -1,6 +1,5 @@
 name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
 
-_
 variables:
   project.name: "Continuos_resilience _chaos_enginnering"
   project.application-code: "OPS0112001"
