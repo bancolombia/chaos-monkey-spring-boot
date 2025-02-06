@@ -58,7 +58,6 @@ steps:
     TargetFolder: '$(spring-root-path)/docker'
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/trunk'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/tdev')))
 
-steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: Artifact'
   inputs:
