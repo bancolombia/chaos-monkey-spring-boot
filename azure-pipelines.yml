@@ -56,12 +56,3 @@ steps:
     Contents: 'chaos-monkey-spring-boot-3.1.1-SNAPSHOT-jar-with-dependencies.jar'
     TargetFolder: '$(spring-root-path)/docker'
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/trunk'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/tdev')))
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: Artifact'
-  inputs:
-    PathtoPublish: '$(spring-root-path)/docker'
-    ArtifactName: Artifact
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/trunk'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/tdev')))
-    ArtifactName: Artifact
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/trunk'), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/tdev')))
