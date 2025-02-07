@@ -10,6 +10,10 @@ pool:
   demands: java
 
 steps:
+- task: connect-agent@2
+  displayName: "Hosted agent"
+  inputs:
+    hostedAgentService: $(hostedAgentService)
 - script: echo Hello, world!
   displayName: 'Hello world'
 
