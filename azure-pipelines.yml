@@ -30,8 +30,8 @@ steps:
     SonarQube: SonarQube
     scannerMode: CLI
     configMode: manual
-    cliProjectKey: "$(DefinitionName)"
-    cliProjectName: "$(DefinitionName)"
+    cliProjectKey: "OPS0112001_chaos_monkey"
+    cliProjectName: "OPS0112001_chaos_monkey"
     cliProjectVersion: "$(Build.BuildNumber)"
     extraProperties: |
       sonar.projectVersion=$(Build.BuildNumber)
