@@ -34,7 +34,7 @@ steps:
     cliProjectName: "OPS0112001_Chaos_monkey"
     cliProjectVersion: "$(Build.BuildNumber)"
     extraProperties: |
-      sona.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
+      sonar.java.binaries=$(spring-root-path)/chaos-monkey-spring-boot/target/classes/de/codecentric/spring/boot/chaos/monkey
       sonar.coverage.jacoco.xmlReportPaths=$(spring-root-path)/chaos-monkey-spring-boot/target/site/jacoco/jacoco.xml
       sonar.junit.reportsPaths=$(spring-root-path)/chaos-monkey-spring-boot/target\surefire-reports
 
